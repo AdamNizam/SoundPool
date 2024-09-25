@@ -28,13 +28,20 @@ class MainActivity : AppCompatActivity() {
         sp = SoundPool.Builder()
             .setMaxStreams(10)
             .build()
-
-        sp.setOnLoadCompleteListener { _, sampleId, status ->
+//
+//        sp.setOnLoadCompleteListener { _, sampleId, status ->
+//            if (status == 0) {
+//                spLoaded = true
+//                Toast.makeText(this, "Audio berhasil dimuat dengan ID: $sampleId", Toast.LENGTH_SHORT).show()
+//            } else {
+//                Toast.makeText(this, "Gagal memuat audio, status: $status", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+        sp.setOnLoadCompleteListener { _, _, status ->
             if (status == 0) {
                 spLoaded = true
-                Toast.makeText(this, "Audio berhasil dimuat dengan ID: $sampleId", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Gagal memuat audio, status: $status", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@MainActivity, "Gagal load", Toast.LENGTH_SHORT).show()
             }
         }
         soundId = sp.load(this, R.raw.tes_1, 1)
@@ -42,7 +49,7 @@ class MainActivity : AppCompatActivity() {
         val btnSound = findViewById<Button>(R.id.btn_sound_pool)
         btnSound.setOnClickListener {
             if (spLoaded) {
-                sp.play(soundId, 1f, 1f, 0, 0, 1f)
+                sp.play(soundId, 1f, 1f, 0, 0, 0.5f)
             }
         }
 
